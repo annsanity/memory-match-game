@@ -1,19 +1,22 @@
 {
   "name": "memory-match-game",
   "version": "1.0.0",
-  "description": "Interactive Memory Game using Pixi.js and GSAP",
-  "main": "index.js",
+  "description": "Interactive Memory Match Game",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "gsap": "^3.12.7",
-    "pixi.js": "^8.6.6"
-  },
   "devDependencies": {
-    "vite": "^6.0.7"
+    "gsap": "^3.12.7",
+    "pixi.js": "^8.6.6",
+    "vite": "^5.0.12",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
   }
 }

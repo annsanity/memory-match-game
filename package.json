@@ -1,0 +1,19 @@
+{
+  "name": "memory-match-game",
+  "version": "1.0.0",
+  "description": "Interactive Memory Game using Pixi.js and GSAP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.12.7",
+    "pixi.js": "^8.6.6"
+  },
+  "devDependencies": {
+    "vite": "^6.0.7"
+  }
+}

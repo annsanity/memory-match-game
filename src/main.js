@@ -9,8 +9,8 @@ import { gsap } from 'gsap';
     });
 
     const sounds = {
-        flip: await Assets.load('mixkit-game-ball-tap-2073.wav'),
-        match : await Assets.load('mixkit-winning-a-coin-video-game-2069.wav'),
+        flip: await Assets.load('/assets/sounds/mixkit-game-ball-tap-2073.wav'),
+        match : await Assets.load('/assets/sounds/mixkit-winning-a-coin-video-game-2069.wav'),
         win: await Assets.load('src/assets/sounds/mixkit-casino-bling-achievement-2067.wav')
     };
 

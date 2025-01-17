@@ -1,49 +1,78 @@
-import * as PIXI from 'pixi.js';
+import { Application, Assets, Text, Container, Ticker, Graphics } from 'pixi.js';
 import { gsap } from 'gsap';
 
-class MemoryGame{
-    constructor(size = 4){
-        this.size = size;
-        this.gridSize = size * size;
-        this.cardTypes = this.gridSize / 2;
+(async () => {
+    const app = new Application();
+    await app.init({
+        background: '#084c24',
+        resizeTo: window,
+    });
 
-        this.cards = [];
-        this.flippedCards = [];
-        this.matchedPairs = 0;
-        this.moves = 0;
+    document.getElementById('game-container').appendChild(app.canvas);
 
-        this.boardElement = document.getElementById('game-board');
-        this.movesElement = document.getElementById('moves');
-        this.startButton = document.getElementById('start-btn');
-        this.resetButton = document.getElementById('reset-btn');
+    const gameContainer = new Container();
+    gameContainer.x = app.screen.width / 2;
+    gameContainer.y = app.screen.height / 2;
+    app.stage.addChild(gameContainer);
 
-        this.setupEventListeners();
+    const title = new Text({
+        text: 'Memory Match Game',
+        style: {
+            fontFamily: 'Arial',
+            fontSize: 24,
+            fill: 0xffffff,
+        }
+    });
+
+    title.anchor.set(0.5);
+    title.y = -200;
+    gameContainer.addChild(title);  
+
+    // create card functio
+    function createCard(symbol) {
+
+        const card = new Container();
+        
+        const cardFront = new Graphics();
+        const frontBg = new Graphics();
+        frontBg.fill(0xffffff);
+        frontBg.rect(-50, -75, 100, 150, 10)
+        frontBg.fill();
+
+        const text = new Text({
+            text: symbol,
+            style: {
+                fontSize: 60,
+                fill: symbol === '♥' || symbol === '♦' ? '#FF0000' : '#000000'
+            }
+        });
+
+        text.anchor.set(0.5);
+        cardFront.addChild(frontBg, text);
+        cardFront.visible = false;
+
+        card.addChild(cardBack, cardFront);
+        card.interactive = true;
+        card.symbol = symbol;
+        card.revealed = false;
+
+        return card;
     }
 
-    setupEventListeners(){
-        this.startButton.addEventListener('click', () => this.startGame());
-        this.resetButton.addEventListener('click', () => this.resetButton());
+    const symbols = ['♠', '♣', '♥', '♦', '★', '●'];
+    let cardSymbols = [...symbols, ...symbols];
 
+    cardSymbols.sort(() => Math.random() - 0.5)
+
+    cardSymbols.forEach((symbol, index) => {
+        const card = createCard(symbol);
+        card.x = (index % 4 - 1.5) * 120;
+        card.y = (Math.floor(index / 4) - 1) * 170;
+        gameContainer.addChild(card);
     }
+    );
 
-    startGame(){
+    app.ticker.add((time) => {
 
-        this.boardElement.innerHTML = '';
-        this.flippedCards = [];
-        this.matchedPairs = 0;
-        this.moves = 0;
-        this.movesElement.textContent = '0';
-
-        const cardTypes = this.generateCardTypes();
-        this.renderCards(cardTypes);
-
-        this.startButton.disabled = true;
-        this.resetButton.disabled = false;
-    }
-
-    generateCardTypes(){
-
-        const types = Array.from({ length: this.cardTypes }, (_,i) => i);
-    }
-}
-
+    });
+})();

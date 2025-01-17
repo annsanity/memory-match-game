@@ -1,4 +1,4 @@
-import { Application, Assets, Text, Container, Ticker, Graphics } from 'pixi.js';
+import { Application, Assets, Text, Container, Graphics } from 'pixi.js';
 import { gsap } from 'gsap';
 
 (async () => {
@@ -57,9 +57,8 @@ import { gsap } from 'gsap';
     //Reset Button
     const resetButton = new Container();
     const buttonBg = new Graphics();
-    buttonBg.fill(0xffffff);
+    buttonBg.fill({ color: 0xffffff });
     buttonBg.roundRect(-50, -20, 100, 40, 10);
-    buttonBg.fill();
 
     const buttonText = new Text({
         text: 'Reset',
@@ -121,11 +120,14 @@ import { gsap } from 'gsap';
 
         const card = new Container();
         
-        const cardFront = new Graphics();
+        const cardFront = new Container();
+        const cardBack = new Graphics();
         const frontBg = new Graphics();
-        frontBg.fill(0xffffff);
+        frontBg.fill({color: 0xffffff});
         frontBg.rect(-50, -75, 100, 150, 10)
-        frontBg.fill();
+
+        cardBack.fill({color: 0x0000ff});
+        cardBack.roundRect(-50, -75, 100, 150, 10);
 
         const text = new Text({
             text: symbol,
@@ -146,7 +148,7 @@ import { gsap } from 'gsap';
 
         card.on('pointerdown', () => {
             if(canFlip && !card.revealed && flippedCards.length < 2){
-                flippedCards(card);
+                flipCard(card);
             }
         });
 
@@ -186,7 +188,7 @@ import { gsap } from 'gsap';
             duration: 0.15,
             onComplete: () => {
                 card.children[0].visible = !card.children[0].visible;
-                card.children[1].visible = !card.children[0].visible;
+                card.children[1].visible = !card.children[1].visible;
                 gsap.to(card.scale, {
                     x: 1,
                     duration: 0.15,
@@ -263,10 +265,9 @@ import { gsap } from 'gsap';
         const winContainer = new Container();
 
         const overlay = new Graphics();
-        overlay.beginfill(0x000000, 0.8);
+        overlay.fill({ color: 0x000000, alpha: 0.8 }); 
         overlay.rect(-app.screen.width/2, -app.screen.height/2, 
             app.screen.width, app.screen.height);
-        overlay.fill();
 
         const winText = new Text({
             text: `Congratulations!\nYou Won in ${moves} moves!`,
@@ -282,15 +283,11 @@ import { gsap } from 'gsap';
         winContainer.addChild(overlay, winText);
         gameContainer.addChild(winContainer);
 
-        gsap.from(winText. scale, {
+        gsap.from(winText.scale, {
             x: 0,
             y: 0,
             duration: 0.5,
             ease: 'back.out'
         });
     }
-
-    app.ticker.add((time) => {
-
-    });
 })();
